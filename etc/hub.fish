@@ -6,9 +6,6 @@
 # 'hub help <tab>' should show a list of commands that help is available for.
 # '__fish_hub_suppress_files' function.
 
-function __fish_hub_suppress_files
-end
-
 # statement starting with 'hub'
 function __fish_hub_needs_command
     set cmd (commandline -opc)
