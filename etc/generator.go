@@ -2,7 +2,11 @@
 Generator for making completion scripts automatically depending on the type of shell provided as argument.
 
 Example usage:
-$ script-generator fish
+$ generator
+	Should generate completion script for default shell
+
+$ generator fish
+	Should generate completion script for given shell. Fish in this situation.
 */
 
 package main
@@ -10,26 +14,70 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
-func helpText() {
-	fmt.Println("Incorrect usage.")
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
 
-func parseArgs(args []string) {
+func parseArgs(args []string) string {
 	var shell string
+	var validshell bool
 
-	if len(args) == 0 {
-		shell = os.Getenv("SHELL")
-		fmt.Println(shell)
-	} else if len(args) == 1 {
+	if len(args) > 0 {
 		shell = args[0]
-		fmt.Println(shell)
+	} else {
+		shell = filepath.Base(os.Getenv("SHELL"))
 	}
+
+	shells := []string{"bash", "fish", "zsh"}
+	for _, s := range shells {
+		if s == shell {
+			validshell = true
+			break
+		}
+	}
+
+	if !validshell {
+		fmt.Println("Unsupported shell.")
+		fmt.Printf("Supported shells are: %s\n", strings.Join(shells, " "))
+		os.Exit(0)
+	}
+
+	return shell
+}
+
+func decideScript(shell string) {
+	if shell == "bash" {
+		generateBashScript()
+	} else if shell == "fish" {
+		generateFishScript()
+	} else if shell == "zsh" {
+		generateZshScript()
+	} else {
+		fmt.Println("Unknown shell")
+	}
+}
+
+func generateBashScript() {
+	fmt.Println("bash")
+}
+
+func generateFishScript() {
+	fmt.Println("fish")
+}
+
+func generateZshScript() {
+	fmt.Println("zsh")
 }
 
 func main() {
 	args := os.Args[1:]
 
-	parseArgs(args)
+	shell := parseArgs(args)
+	decideScript(shell)
 }
