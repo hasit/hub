@@ -4,10 +4,6 @@
 # TODO
 # Snippet type thing. 'hub create [name]' where [name] should be in grey and suppress the smart suggesstions from fish.
 # 'hub help <tab>' should show a list of commands that help is available for.
-# '__fish_hub_suppress_files' function.
-
-function __fish_hub_suppress_files
-end
 
 # statement starting with 'hub'
 function __fish_hub_needs_command
