@@ -13,7 +13,7 @@
 
 # Get a list of branches, remove everything before start till the branch name
 function __fish_hub_branches
-  command git branch --no-color -a ^ /dev/null | sed -e 's,^..,,' -e 's,^remotes/,,'
+  command git branch --no-color -a ^ /dev/null | grep -v ' -> ' | sed -e 's,^..,,' -e 's,^remotes/,,'
 end
 
 function __fish_hub_tags
