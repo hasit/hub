@@ -7,6 +7,9 @@ $ generator
 
 $ generator fish
 	Should generate completion script for given shell. Fish in this situation.
+
+Todo:
+Need to store description of each command. Can be parsed from the man pages but need a better format.
 */
 
 package main
@@ -17,6 +20,11 @@ import (
 	"path/filepath"
 	"strings"
 )
+
+type hubcommand struct {
+	command string
+	options []string
+}
 
 func checkErr(err error) {
 	if err != nil {
