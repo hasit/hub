@@ -6,6 +6,10 @@
 # 'hub help <tab>' should show a list of commands that help is available for.
 # '__fish_hub_suppress_files' function.
 
+###########
+# functions
+###########
+
 # statement starting with 'hub'
 function __fish_hub_needs_command
     set cmd (commandline -opc)
@@ -26,11 +30,22 @@ function __fish_hub_using_command
     return 1
 end
 
+##########
+# commands
+##########
+
 # help
 # show '--help' for every command
 complete -f -c hub -n '__fish_hub_needs_command' -a help -d 'Display enhanced git-help(1)'
 complete -f -c hub -n 'not __fish_hub_needs_command' -l help -d 'Display enhanced git-help(1)'
-#complete -f -c hub -n 'not __fish_hub_needs_command' -l help -d 'Display enhanced git-help(1)'
+complete -f -c hub -n '__fish_hub_needs_command' -l help -d 'Display enhanced git-help(1)'
+
+# noop
+complete -f -c hub -n '__fish_hub_needs_command' -l noop -d 'Shows  which  command(s) would be run as a result of the current command'
+
+# alias
+complete -f -c hub -n '__fish_hub_needs_command' -a alias -d 'Shows shell instructions for wrapping git.'
+complete -f -c hub -n '__fish_hub_using_command alias' -s s -d 'Output shell script suitable for eval'
 
 # create
 complete -f -c hub -n '__fish_hub_needs_command' -a create -d 'Create repository on Github and add Github as remote'
@@ -62,4 +77,4 @@ complete -f -c hub -n '__fish_hub_using_command pull-request' -s h -d 'Specify H
 
 # ci-status
 complete -f -c hub -n '__fish_hub_needs_command' -a ci-status -d 'Looks up the SHA for commit in GitHub Status API and displays the latest status'
-complete -f -c hub -n '__fish_hub_needs_command ci-status' -s v -d 'Print the URL to CI build results'
+complete -f -c hub -n '__fish_hub_using_command ci-status' -s v -d 'Print the URL to CI build results'
