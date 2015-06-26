@@ -2,16 +2,18 @@
 # Inspired by git.fish
 # ('git' + 'hub') commands added
 
-# TODO
+# General TODO
 # Snippet type thing. 'hub create [name]' where [name] should be in grey and suppress the smart suggesstions from fish.
 # 'hub help <tab>' should show a list of commands that help is available for.
+
 
 ##################
 # helper functions
 ##################
 
+# Get a list of branches, remove everything before start till the branch name
 function __fish_hub_branches
-  command git branch --no-color -a ^/dev/null | sgrep -v ' -> ' | sed -e 's/^..//' -e 's/^remotes\///'
+  command git branch --no-color -a ^ /dev/null | sed -e 's,^..,,' -e 's,^remotes/,,'
 end
 
 function __fish_hub_tags
@@ -27,8 +29,9 @@ function __fish_hub_remotes
   command git remote
 end
 
+# Get a list of changed files and remove everything before file name
 function __fish_hub_modified_files
-    command git status -s | grep -e "^ M" | sed "s/^ M //"
+    command git status -s | grep -e "^ M" | sed "s,^ M ,,"
 end
 
 function __fish_hub_ranges
@@ -55,7 +58,7 @@ function __fish_hub_needs_command
     return 1
 end
 
-# statement starting with 'hub COMMAND'
+# statement starting with 'hub <command>'
 function __fish_hub_using_command
     set cmd (commandline -opc)
     if [ (count $cmd) -gt 1 ]
